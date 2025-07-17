@@ -39,9 +39,9 @@ This folder contains the training and inference results of RansomSentinel and tr
 
 ### Folder RanSMAP
 
-This folder contains the training and inference results of RansomSentinel and traditional machine learning classifers, as well as the t-SNE visualization, for RANSMAP dataset. The files are the following:
+This folder contains the training and inference results of RansomSentinel and traditional machine learning classifers, as well as the t-SNE visualization, for RanSMAP dataset. The files are the following:
 
-- RanSMAP_TsneVisualization.ipynb: t-SNE data visualization of the RANSMAP dataset.
+- RanSMAP_TsneVisualization.ipynb: t-SNE data visualization of the RanSMAP dataset.
 - RanSMAP_TraditionalML.ipynb: Traditional machine learning classifiers.
 - RanSMAP_FinalDNN.ipynb: RansomSentinel classifier.
 
@@ -52,5 +52,5 @@ This folder contains the R files with the statistical analysis of the research. 
 - Statistics.Rmd: DLL injection statistics.
 - StatisticalAnalysis_120GB.Rmd: Statistics for the RanSAP120GB dataset.
 - StatisticalAnalysis_250GB.Rmd: Statistics for the RanSAP1250GB dataset.
-- StatisticalAnalysis_RanSMAP.Rmd: Statistics for the RanSAP250GB dataset.
+- StatisticalAnalysis_RanSMAP.Rmd: Statistics for the RanSMAP dataset.
 
