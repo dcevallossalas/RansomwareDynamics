@@ -4,8 +4,8 @@ This repository provides all the files and elements required for experiments rep
 
 This research is part of the project "PRIVIA: Identificación Automatizada de Brechas de Privacidad en Ecuador usando Inteligencia Artificial Generativa y LLMs" conducted by Escuela Politécnica Nacional.
 
-## Research information
+📎 ## Research information
 
 **Date:** 2025-07-27
 
-## How to use this repository?
+📎 ## How to use this repository?
