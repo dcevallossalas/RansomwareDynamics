@@ -1,0 +1,138 @@
+---
+title: "Ransomware dynamics: Mitigating personal data exfiltration through the SCIRAS lens"
+author: "David Cevallos-Salas, José Estrada-Jiménez, Danny S. Guamán, Luis Urquiza-Aguiar"
+output: html_notebook
+---
+
+```{r, warning=FALSE}
+# Global configuration
+knitr::opts_chunk$set(echo = TRUE)
+
+# Libraries
+library(ggplot2)
+library(viridis)
+library(kableExtra)
+library(dplyr)
+library(sur)
+library(qqplotr)
+library(DescTools)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+palette <- viridis(3, alpha= 1, begin = 0.5, end = 0.75, direction = 1, option="viridis")
+```
+
+
+```{r, warning=FALSE}
+# Decision Tree
+dt = c(0.855,0.855,0.856,0.855,0.856,0.856,0.855,0.856,0.855,0.856)
+mean(dt)
+sd(dt)
+
+```
+
+```{r, warning=FALSE}
+# Random Forest
+rf = c(0.849,0.793,0.786,0.912,0.956,0.802,0.770,0.964,0.960,0.964)
+mean(rf)
+sd(rf)
+```
+
+```{r, warning=FALSE}
+# SVC
+svc = c(0.588,0.530,0.550,0.555,0.563,0.564,0.515,0.550,0.583,0.568)
+mean(svc)
+sd(svc)
+```
+
+```{r, warning=FALSE}
+# LDA
+lda = c(0.414,0.414,0.415,0.414,0.414,0.414,0.414,0.414,0.414,0.414)
+
+mean(lda)
+sd(lda)
+
+```
+
+```{r, warning=FALSE}
+# Gaussian Naive Bayes
+nb = c(0.111,0.147,0.147,0.147,0.111,0.111,0.147,0.147,0.111,0.111)
+mean(nb)
+sd(nb)
+
+```
+```{r, warning=FALSE}
+# Deep Neuronal Network (DNN)
+dnn = c(0.986,0.982,0.984,0.984,0.984,0.984,0.980,0.982,0.948,0.982)
+
+mean(dnn)
+sd(dnn)
+```
+
+```{r, warning=FALSE}
+# Decision Tree and DNN
+wilcox.test(dt,dnn, alternative="less")
+```
+
+```{r, warning=FALSE}
+# Random Forest and DNN
+wilcox.test(rf,dnn, alternative="less")
+```
+
+```{r, warning=FALSE}
+# SVC and DNN
+wilcox.test(svc,dnn, alternative="less")
+```
+
+```{r, warning=FALSE}
+# LDA and DNN
+wilcox.test(lda,dnn, alternative="less")
+```
+
+```{r, warning=FALSE}
+# Gaussian Naive Bayes and DNN
+wilcox.test(nb,dnn, alternative="less")
+```
+
+```{r}
+levels = c(rep("LockBit\n(One sample)",3),rep("Ryuk\n(Two samples)",3),rep("Conti\n(Two samples)",3),rep("TeslaCrypt\n(One sample)",3))
+
+levels = factor(levels,levels=c("LockBit\n(One sample)","Ryuk\n(Two samples)","Conti\n(Two samples)","TeslaCrypt\n(One sample)"))
+
+values = c(
+  0.961, 0.974, 1.0,
+  0.954, 0.974, 0.999,
+  0.907, 0.974, 0.999,
+  0.740, 0.794, 0.965)
+  
+types = rep(rep(c("Critical security threshold","F1-score","Family AUC"),3),4)
+
+
+df = data.frame(levels, values, types)
+df$values <- sprintf("%.3f", df$values)
+
+picture1 <- ggplot(data = df, aes(x = levels, y = as.numeric(values), fill = types)) +
+  geom_bar(stat = "identity", position = position_dodge(width = 0.9), width = 0.9) +
+  geom_text(aes(label = values), position = position_dodge(width = 0.9), vjust = -0.5, hjust = 0.5, color = "black", size = 4) +
+  labs(title = "", x = "Ransomware family", y = "Value") +
+  scale_y_continuous(limits = c(0, 1.05), breaks = seq(0, 1, by = 0.1), labels = scales::number_format(accuracy = 0.001)) +
+  scale_fill_manual(values = c("red","#85c1e9","#2471a3"), labels = c("Estimated critical security threshold", "F1-score","Family AUC"), name = "") +
+  theme(
+    axis.text.x = element_text(angle = 0, hjust = 0.5, size = 12), 
+    axis.text.y = element_text(size = 12),
+    axis.title.x = element_text(size = 12),
+    axis.title.y = element_text(size = 12),
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 12)
+
+  )
+  
+
+print(picture1)
+
+
+
+```
+
+
+

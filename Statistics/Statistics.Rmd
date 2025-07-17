@@ -1,0 +1,22 @@
+---
+title: "Ransomware dynamics: Mitigating personal data exfiltration through the SCIRAS lens"
+author: "David Cevallos-Salas, José Estrada-Jiménez, Danny S. Guamán, Luis Urquiza-Aguiar"
+output: html_notebook
+---
+
+```{r}
+dll1 = c(16,28,170,63,139,36)
+mean(dll1)
+sd(dll1)
+dll2 = c(12,24,158,53,136,36)
+mean(dll2)
+sd(dll2)
+
+fligner.test(x=list(dll1,dll2))
+
+```
+
+```{r}
+wilcox.test(dll1,dll2,alternative="greater")
+```
+

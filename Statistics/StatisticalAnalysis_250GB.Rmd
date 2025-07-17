@@ -1,0 +1,120 @@
+---
+title: "Ransomware dynamics: Mitigating personal data exfiltration through the SCIRAS lens"
+author: "David Cevallos-Salas, José Estrada-Jiménez, Danny S. Guamán, Luis Urquiza-Aguiar"
+output: html_notebook
+---
+
+```{r, warning=FALSE}
+# Global configuration
+knitr::opts_chunk$set(echo = TRUE)
+
+# Libraries
+library(ggplot2)
+library(viridis)
+library(kableExtra)
+library(dplyr)
+library(sur)
+library(qqplotr)
+library(DescTools)
+
+# Viridis palette
+palette1 <- viridis(6, alpha= 1, begin = 0, end = 1, direction = 1, option="viridis")
+palette2 <- viridis(6, alpha= 1, begin = 0, end = 1, direction = 1, option="viridis")
+```
+
+
+```{r, warning=FALSE}
+# Decision Tree
+dt = c(0.724,0.724,0.725,0.724,0.725,0.725,0.724,0.725,0.724,0.725)
+mean(dt)
+sd(dt)
+
+```
+
+```{r, warning=FALSE}
+# Random Forest
+rf = c(0.749,0.753,0.749,0.749,0.749,0.749,0.750,0.747,0.747,0.748)
+mean(rf)
+sd(rf)
+```
+
+```{r, warning=FALSE}
+# SVC
+svc = c(0.634,0.530,0.554,0.535,0.420,0.628,0.598,0.677,0.593,0.614)
+mean(svc)
+sd(svc)
+```
+
+```{r, warning=FALSE}
+# LDA
+lda = c(0.678,0.679,0.679,0.679,0.679,0.678,0.679,0.679,0.679,0.679)
+
+mean(lda)
+sd(lda)
+
+```
+
+```{r, warning=FALSE}
+# Gaussian Naive Bayes
+nb = c(0.626,0.632,0.634,0.631,0.635,0.635,0.633,0.632,0.632,0.631)
+mean(nb)
+sd(nb)
+
+```
+```{r, warning=FALSE}
+# Deep Neuronal Network (DNN)
+dnn = c(0.781,0.780,0.771,0.784,0.782,0.789,0.783,0.787,0.781,0.781)
+
+mean(dnn)
+sd(dnn)
+```
+
+```{r, warning=FALSE}
+# Decision Tree and DNN
+wilcox.test(dt,dnn, alternative="less")
+```
+
+```{r, warning=FALSE}
+# Random Forest and DNN
+wilcox.test(rf,dnn, alternative="less")
+```
+
+```{r, warning=FALSE}
+# SVC and DNN
+wilcox.test(svc,dnn, alternative="less")
+```
+
+```{r, warning=FALSE}
+# LDA and DNN
+wilcox.test(lda,dnn, alternative="less")
+```
+
+```{r, warning=FALSE}
+# Gaussian Naive Bayes and DNN
+wilcox.test(nb,dnn, alternative="less")
+```
+
+```{r}
+
+labels = factor(c(rep("DT",10),rep("RF",10),rep("SVM",10),rep("LDA",10),rep("GNB",10),rep("DNN",10)),levels=c("DT", "RF", "SVM", "LDA", "GNB", "DNN"))
+scores = c(dt_sm,rf_sm,svc_sm,lda_sm,nb_sm,dnn_sm)
+
+df  <- data.frame(
+  labels  = labels,
+  scores = scores
+)
+
+picture = ggplot(df, aes(x = labels, y = scores, fill=labels)) + 
+  geom_boxplot()+
+  stat_boxplot(geom="errorbar", width=0.3)+
+  labs(x="Classifier", y = "Accuracy", color="")+
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_fill_manual(values = palette1,labels = c("DT", "RF", "SVM", "LDA", "GNB", "DNN"))+
+  scale_colour_manual(values = palette1) +
+  guides(fill=guide_legend(title="Classifier"))+
+  scale_y_continuous(limits=c(0.525,0.700))
+
+```
+
+
+
