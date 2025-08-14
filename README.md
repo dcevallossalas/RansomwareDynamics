@@ -6,9 +6,9 @@ This research is part of the project "PRIVIA: Identificación Automatizada de Br
 
 ## Research information
 
-- **Main project:** PRIVIA: Identificación Automatizada de Brechas de Privacidad en Ecuador usando Inteligencia Artificial Generativa y LLMs" conducted by Escuela Politécnica Nacional.
+- **Main project:** "PRIVIA: Identificación Automatizada de Brechas de Privacidad en Ecuador usando Inteligencia Artificial Generativa y LLMs" conducted by Escuela Politécnica Nacional.
 - **Main project reference:** PIGR-24-06.
-- **Date:** 2025-07-27
+- **Date:** 2025-07-27.
 
 ## How to use this repository?
 
